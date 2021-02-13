@@ -1,0 +1,56 @@
+# docker-compose.yaml
+
+version: '3' # version of docker-compose to use
+
+services: # configuring each container
+
+  db: # name of our mysql container
+    image: mysql:8.0 # which image to pull, in this case specifying v. 5.7
+    container_name: ${DOCKERAPP_NAME}-db
+    volumes: # data to map to the container
+      - ./src/data:/docker-entrypoint-initdb.d # where to find our data -- we'll talk more about this
+      - db_data:/var/lib/mysql
+    restart: unless-stopped # always restart the container after reboot
+    environment: # environment variables -- mysql options in this case
+      - MYSQL_ROOT_PASSWORD=${DOCKERAPP_DATABASE_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DOCKERAPP_DATABASE_NAME}
+      - MYSQL_USER=${DOCKERAPP_DATABASE_USER}
+      - MYSQL_PASSWORD=${DOCKERAPP_DATABASE_PASSWORD}
+
+    command: [
+      '--default-authentication-plugin=mysql_native_password',
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci'
+    ]
+
+
+  wordpress: # name of our wordpress container
+    container_name: ${DOCKERAPP_NAME}-wordpress
+    depends_on: # container dependencies that need to be running first
+      - db
+    image: wordpress:latest # image used by our container
+    ports:
+      - "8000:80" # setting our port bindings for networking
+    restart: unless-stopped
+    environment:
+      - WORDPRESS_DB_HOST=db:3306 # default mysql port
+      - WORDPRESS_DB_USER=${DOCKERAPP_DATABASE_USER}
+      - WORDPRESS_DB_PASSWORD=${DOCKERAPP_DATABASE_PASSWORD} # matches the password set in the db container
+      - WORDPRESS_DB_NAME=${DOCKERAPP_DATABASE_NAME}
+    volumes: # this is where we tell Docker what to pay attention to
+      - ./src/web:/var/www/html # map our website's folders and files to the container
+
+  ## Access and manage mysql databases with a database manager
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    container_name: "${DOCKERAPP_NAME}-phpmyadmin"
+    restart: unless-stopped
+    environment: # should use this port to connect to our running mysql database software
+      PMA_HOST: db:3306
+    ports:
+      - 1337:80
+# we need to make db changes persistent with a volume
+volumes:
+    db_data: {}
