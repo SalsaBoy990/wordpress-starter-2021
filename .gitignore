@@ -1,0 +1,43 @@
+### IntelliJ
+.idea
+*.iml
+
+# Éles .env ne kerüljön fel!
+#.env
+.env.prod
+
+### Composer
+composer.phar
+composer.lock
+vendor/
+
+### Node
+node_modules
+
+### Docker
+ntunnel-*.php
+
+### Wordpress
+
+# db dump-ot ne
+src/data/*
+!src/data/rewrite-domainname.sql
+
+src/web/wp-config.php
+src/web/*
+!src/web/wp-content
+
+# a saját témád/pluginod menjen fel git-re (ami nem telepíthető Composer-rel)
+src/web/wp-content/themes/*
+!src/web/wp-content/themes/YOUR-CHILD-THEME-HERE
+src/web/wp-content/plugins/*
+!src/web/wp-content/themes/YOUR-PLUGINS-HERE
+
+# csak a mappák legyenek meg, tartalom nélkül
+src/web/wp-content/backups-dup-lite/*
+src/web/wp-content/cache/*
+src/web/wp-content/languages/*
+src/web/wp-content/upgrade/*
+
+# ez a wordfence log-okat tartalmazza
+src/web/wp-content/wflogs/*

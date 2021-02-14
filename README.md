@@ -3,6 +3,7 @@
 ## Wordpress
 
 ### Composer
+
 A wp-content/plugins mappába kerül telepítésre az összes plugin/sablon, Composerrel. Ennek előnyei:
 
 - A nem általam kezelt kódok nem kerülnek gitbe
@@ -12,6 +13,12 @@ A wp-content/plugins mappába kerül telepítésre az összes plugin/sablon, Com
 
 ```bash
 composer update
+```
+
+Telepítés:
+
+```bash
+composer require
 ```
 
 ### Új Wordpress oldal esetén
@@ -35,15 +42,18 @@ Ha fut bármilyen más apache szerver a gépeden, akkor azt állítsd le.
 
 A .httacces fájlokat is módosítsd, amennyiben ez szükséges. Plusz fontos, hogy index.php legyen a root-ban
 
-### MySql 5.7
+### MySQL 8.0
 
-Egyelőre nem frissítettem 8.0-ra. Illetve MariaDB-re is válthatnék.
+Frissítettem 8.0-ra. Illetve MariaDB-re is válthatnék.
 
 ### dotenv, backup
 
 A .env fájlok NE KERÜLJENEK FEL git-re, mert komoly biztonsági kockázatot jelenthet, ha illetéktelenek kezébe jut.
 Szintén érvényes ez a wp-config.php fájlra (amennyiben nem a .env fájlból töltjük bele az értékeket, mert akkor elég, ha csak a .env nem kerül fel).
 
+### Salt
+
+Saltok manuális forgatásához secret key-ek: https://api.wordpress.org/secret-key/1.1/salt/
 
 ### Development
 
@@ -73,7 +83,6 @@ sudo docker system prune -a --volumes
 ```
 
 
-
 ### Deploy
 
 - Hozz létre mysql adatbázist a tárhelyszolgáltatódnál -> a wp-config-ot frissítsd az új adatbázisnévvel, felhasználónévvel, jelszóval. A Host a legtöbb esetben "localhost".
@@ -86,5 +95,9 @@ sudo docker system prune -a --volumes
 
 ### TODO
 
- - wp-cli telepítése
+ - wp-cli telepítése (hasznos lehet, de pillanatnyilag nem szükséges)
  - web-composer container hozzáadása (már első futáskor letölti a plugin-okat)
+ - saltok forgatása automatikusan (pl. Salt Shaker - https://wordpress.org/plugins/salt-shaker/)
+ - .env változók wp-config-ban (egylőre osztott tárhelynél nem olvashatók be env-ből)
+ - JWT tokenek (ha van), REST API letiltása (amennyiben nincs rá szükség)
+ - fájlmódosítások tiltása wp admin-on (DISALLOW_FILE_MODS=true)
