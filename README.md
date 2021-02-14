@@ -3,6 +3,7 @@
 ## Wordpress
 
 ### Composer
+
 A wp-content/plugins mappába kerül telepítésre az összes plugin/sablon, Composerrel. Ennek előnyei:
 
 - A nem általam kezelt kódok nem kerülnek gitbe
@@ -12,6 +13,12 @@ A wp-content/plugins mappába kerül telepítésre az összes plugin/sablon, Com
 
 ```bash
 composer update
+```
+
+Telepítés:
+
+```bash
+composer require
 ```
 
 ### Új Wordpress oldal esetén
@@ -35,9 +42,9 @@ Ha fut bármilyen más apache szerver a gépeden, akkor azt állítsd le.
 
 A .httacces fájlokat is módosítsd, amennyiben ez szükséges. Plusz fontos, hogy index.php legyen a root-ban
 
-### MySql 5.7
+### MySQL 8.0
 
-Egyelőre nem frissítettem 8.0-ra. Illetve MariaDB-re is válthatnék.
+Frissítettem 8.0-ra. Illetve MariaDB-re is válthatnék.
 
 ### dotenv, backup
 
@@ -74,7 +81,6 @@ Viszont vigyázz, mert ez más projektek container-jeit és volume-jait is megse
 ```bash
 sudo docker system prune -a --volumes
 ```
-
 
 
 ### Deploy
