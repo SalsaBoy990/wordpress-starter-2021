@@ -40,5 +40,7 @@ src/web/wp-content/cache/*
 src/web/wp-content/languages/*
 src/web/wp-content/upgrade/*
 
+src/web/wp-content/uploads/wc-logs/
+
 # ez a wordfence log-okat tartalmazza
 src/web/wp-content/wflogs/*
