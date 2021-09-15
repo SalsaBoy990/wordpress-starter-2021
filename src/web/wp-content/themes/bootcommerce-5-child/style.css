@@ -1,0 +1,53 @@
+/*
+ Theme Name:   bootCommerce 5 Child
+ Description:  bootScore 5 WooCommerce Child Theme
+ Author:       craftwerk - Bastian Kreiter
+ Author URI:   https://crftwrk.de
+ Template:     bootscore-5
+ Version:      5.0.2.2
+ Text Domain:  bootscore
+*/
+
+
+/* 
+Add as many files as you need for development. 
+When you're done, merge them all in the style.css file to reduce file requests. 
+*/
+
+@import url("css/custom.css");
+
+@media screen and (max-width: 1920px) {
+  .site-padding {
+    padding: 0 45px !important;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .site-padding {
+    padding: 0 30px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .site-padding {
+    padding: 0 24px !important;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .site-padding {
+    padding: 0 16px !important;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family:  "Rasa", Georgia, 'Times New Roman', Times, serif !important;
+}
+
+h1, h2 {
+  font-weight: 700 !important;
+}
+
+h3, h4, h5, h6 {
+  font-weight: 600 !important;
+}

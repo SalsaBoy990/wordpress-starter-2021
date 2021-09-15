@@ -29,15 +29,18 @@ src/web/*
 
 # a saját témád/pluginod menjen fel git-re (ami nem telepíthető Composer-rel)
 src/web/wp-content/themes/*
-!src/web/wp-content/themes/YOUR-CHILD-THEME-HERE
+!src/web/wp-content/themes/bootcommerce-5-child
+!src/web/wp-content/themes/bootscore-5
 src/web/wp-content/plugins/*
-!src/web/wp-content/themes/YOUR-PLUGINS-HERE
+!src/web/wp-content/plugins/bs5*
 
 # csak a mappák legyenek meg, tartalom nélkül
 src/web/wp-content/backups-dup-lite/*
 src/web/wp-content/cache/*
 src/web/wp-content/languages/*
 src/web/wp-content/upgrade/*
+
+src/web/wp-content/uploads/wc-logs/
 
 # ez a wordfence log-okat tartalmazza
 src/web/wp-content/wflogs/*

@@ -1,0 +1,48 @@
+/* Sun */
+.dark-mode-switch .form-switch .form-check-input::after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f185 ";
+    position: absolute;
+    top: 0;
+    color: #adb5bd;
+    font-size: .65rem;
+    right: .15rem;
+    opacity: 1;
+}
+
+/* Moon */
+.dark-mode-switch .form-switch .form-check-input::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f186";
+    position: absolute;
+    top: 0;
+    color: #fff;
+    font-size: .65rem;
+    left: .15rem;
+    opacity: 0;
+}
+
+.dark-mode-switch .form-switch .form-check-input:checked::after {
+    opacity: 0;
+}
+
+.form-switch .form-check-input:checked::before {
+   opacity: 1; 
+}
+
+.dark-mode-switch {
+    margin-right: -.5rem;
+}
+
+.dark-mode-switch .form-check {
+    margin-bottom: 0;
+}
+
+@-moz-document url-prefix() { 
+    .form-switch .form-check-input::after,
+    .form-switch .form-check-input::before {
+     top: -1px;
+  }
+}
