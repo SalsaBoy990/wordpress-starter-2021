@@ -33,6 +33,7 @@ src/web/wp-content/themes/*
 !src/web/wp-content/themes/bootscore-5
 src/web/wp-content/plugins/*
 !src/web/wp-content/plugins/bs5*
+!src/web/wp-content/plugins/reactwp-blocks
 
 # csak a mappák legyenek meg, tartalom nélkül
 src/web/wp-content/backups-dup-lite/*
@@ -44,3 +45,5 @@ src/web/wp-content/uploads/wc-logs/
 
 # ez a wordfence log-okat tartalmazza
 src/web/wp-content/wflogs/*
+
+src/web/wp-content/debug.log

@@ -1,0 +1,28 @@
+.wp-block-reactwp-blocks-secondblock {
+  background-color: slategray;
+  color: #fff;
+  border-radius: 5px;
+  padding: 30px;
+  &.is-style-squared {
+    border-radius: 0px;
+  }
+  &.is-style-outlined {
+    border-radius: 2px;
+    border: 2px solid currentColor;
+  }
+  &.has-shadow {
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    &.shadow-opacity-10 {
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    &.shadow-opacity-20 {
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    &.shadow-opacity-30 {
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    &.shadow-opacity-40 {
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.wp-block-reactwp-blocks-secondblock {
+  background-color: slategray;
+  color: #fff;
+  border-radius: 5px;
+  padding: 30px;
+  &.is-style-squared {
+    border-radius: 0px;
+  }
+  &.is-style-outlined {
+    border-radius: 2px;
+    border: 2px solid currentColor;
+  }
+}

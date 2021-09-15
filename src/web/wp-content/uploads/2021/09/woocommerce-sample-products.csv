@@ -1,0 +1,3 @@
+post_title,post_name,post_status,sku,downloadable,virtual,visibility,stock,stock_status,backorders,manage_stock,regular_price,sale_price,weight,length,width,height,tax_status,tax_class,tax:product_type,tax:product_cat,tax:product_tag,tax:product_brand,attribute:Color,attribute_data:Color,attribute:Size,attribute_data:Size
+High Heel Shoe,high-heel-shoe,publish,12345,no,no,visible,,instock,no,no,,,,,,,taxable,,variable,Shoes,Shoes,Fancy Heels,Black | White,0|1|1,US 8 | US 8.5 | US 9 | US 9.5 | US 10 | US 10.5,0|1|1
+Running Shoe,running-shoe,publish,12346,no,no,visible,,instock,no,no,,,,,,,taxable,,variable,Shoes,Shoes,Sportly>Sportly Child,Black | Red | Blue,0|1|1,US 7.5 | US 8 | US 8.5 | US 9 | US 9.5 | US 10 | US 10.5 | US 11 | US 11.5 | US 12,0|1|1
