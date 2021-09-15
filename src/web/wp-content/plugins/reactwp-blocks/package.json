@@ -1,0 +1,86 @@
+{
+  "name": "reactwp-blocks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "checkFormat": "prettier --check \"**/*.{js,json,css,scss}\"",
+    "format": "prettier --write \"**/*.{js,json,css,scss}\"",
+    "lint": "eslint src",
+    "start": "webpack --mode=development --watch",
+    "build": "npm run lint && webpack --mode=production && gulp bundle",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "src/**/*.js": "eslint",
+      "**/*.{js,json,css,scss}": [
+        "prettier --write",
+        "git add"
+      ]
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@wordpress/api-fetch": "^5.2.2",
+    "@wordpress/blob": "^3.1.1",
+    "@wordpress/blocks": "^9.1.4",
+    "@wordpress/compose": "^4.1.3",
+    "@wordpress/data": "^5.1.3",
+    "@wordpress/html-entities": "^3.1.1",
+    "@wordpress/i18n": "^4.1.1",
+    "@wordpress/url": "^3.2.2",
+    "array-move": "^3.0.1",
+    "bootstrap": "^5.1.1",
+    "html-react-parser": "^1.3.0",
+    "jquery": "^3.6.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-sortable-hoc": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "@wordpress/block-editor": "^6.1.8",
+    "@wordpress/browserslist-config": "^4.0.1",
+    "@wordpress/components": "^14.1.5",
+    "@wordpress/editor": "^10.1.11",
+    "@wordpress/element": "^3.1.1",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "browserslist": "^4.16.6",
+    "classnames": "^2.3.1",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^5.2.6",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-react": "^7.24.0",
+    "gulp": "^4.0.2",
+    "gulp-zip": "^5.1.0",
+    "husky": "^6.0.0",
+    "lodash": "^4.17.21",
+    "mini-css-extract-plugin": "^2.0.0",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "postcss-loader": "^6.1.1",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.3.2",
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.0.0",
+    "webpack": "^5.42.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "browserslist": [
+    "extends @wordpress/browserslist-config"
+  ]
+}

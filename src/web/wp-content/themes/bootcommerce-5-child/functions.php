@@ -28,3 +28,11 @@ function bootscore_remove_scripts()
     wp_enqueue_style('child-theme-bootstrap', get_stylesheet_directory_uri() . '/css/lib/bootstrap.min.css', array('parent-style'));
 }
 add_action('wp_enqueue_scripts', 'bootscore_remove_scripts', 20);
+
+
+add_action('admin_enqueue_scripts', 'bootscore_admin_enqueue_bs5');
+
+function bootscore_admin_enqueue_bs5() {
+    // Register your child bootstrap.min.css
+    wp_enqueue_style('child-theme-admin-bootstrap', get_stylesheet_directory_uri() . '/css/lib/bootstrap.min.css', array('parent-style'));
+}

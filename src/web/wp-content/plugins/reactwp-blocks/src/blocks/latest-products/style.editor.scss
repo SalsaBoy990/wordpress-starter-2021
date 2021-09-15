@@ -1,0 +1,36 @@
+.wp-core-ui select {
+  max-width: unset !important;
+}
+
+.components-flex.components-select-control.select-multiple {
+  height: unset !important;
+  display: unset !important;
+  flex: unset !important;
+}
+
+.select-multiple select[multiple] {
+  height: 300px !important;
+  padding: 8px;
+}
+
+.components-input-control__suffix > div > svg {
+  display: none !important;
+}
+
+span.badge.bg-danger.sale {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+}
+
+span.badge.bg-danger.sale,
+span.badge.bg-danger.sale-product {
+  font-size: 1.25rem;
+}
+
+.sale-product {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 1;
+}
