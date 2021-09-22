@@ -83,6 +83,15 @@ module.exports = (env, argv) => {
             'sass-loader',
           ],
         },
+        {
+          test: /\.css$/i,
+          use: [
+            // Creates `style` nodes from JS strings
+            // Translates CSS into CommonJS
+            'css-loader',
+            'postcss-loader',
+          ],
+        },
       ],
     },
     externals: {
@@ -101,7 +110,7 @@ module.exports = (env, argv) => {
       '@wordpress/html-entities': ['wp', 'htmlEntities'],
       '@wordpress/compose': ['wp', 'compose'],
       '@wordpress/api-fetch': ['wp', 'apiFetch'],
-      '@wordpress/url': ['wp', 'url']
+      '@wordpress/url': ['wp', 'url'],
     },
   };
   return config;

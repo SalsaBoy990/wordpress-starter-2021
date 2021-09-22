@@ -1,3 +1,8 @@
+.social-dragging {
+  list-style: none;
+}
+
+
 .wp-block-reactwp-blocks-team-members {
   display: block;
   flex-wrap: wrap;
@@ -31,5 +36,77 @@
     margin: 0px;
     width: auto !important;
     background-color: #f1f1f1;
+    &__title {
+      margin-bottom: 4px;
+    }
+    &__info {
+      color: #555;
+      font-size: 18px;
+      font-weight: normal;
+      margin-bottom: 8px;
+    }
+    &__addIcon {
+      padding: 4px;
+      line-height: 1;
+      border: 1px dashed #8c969f;
+      cursor: pointer;
+    }
+    &__linkForm {
+      border: 1px solid #eaeaea;
+      padding: 10px;
+      margin-top: 10px;
+      input.block-editor-url-input__input {
+        max-width: 100% !important;
+      }
+    }
+    &__removeLink {
+      color: #d23535;
+      font-size: 14px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    &__social {
+      ul {
+        list-style: none;
+        line-height: 1;
+        margin-left: -5px;
+        margin-right: -5px;
+        padding-left: 0;
+        li {
+          display: inline-block;
+          line-height: 1;
+          margin: 5px;
+          a {
+            border-bottom: none;
+          }
+          &.is-selected {
+            outline: 2px solid #f03;
+          }
+          svg {
+            vertical-align: middle;
+            color: #4e4e4e;
+          }
+        }
+      }
+    }
+  }
+
+
+}
+
+
+@media screen and (max-width: 1024px) {
+  .wp-block-reactwp-blocks-team-members {
+    .wp-block-reactwp-blocks-team-member {
+      width: calc(50% - 20px) !important;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .wp-block-reactwp-blocks-team-members {
+    .wp-block-reactwp-blocks-team-member {
+      width: calc(100% - 20px) !important;
+    }
   }
 }

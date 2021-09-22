@@ -12,15 +12,8 @@ registerBlockType('reactwp-blocks/latest-posts', {
     background: '#f03',
     foreground: '#fff',
   },
-  /*attributes: {
-    numberOfPosts: {
-      type: 'number',
-      default: 3,
-    },
-    postCategories: {
-      type: 'string',
-    },
-  },*/
+  // Can only be added to team-members parent block
+  parent: ['reactwp-blocks/posts-grid'],
 
   edit: edit,
   // eslint-disable-next-line react/display-name

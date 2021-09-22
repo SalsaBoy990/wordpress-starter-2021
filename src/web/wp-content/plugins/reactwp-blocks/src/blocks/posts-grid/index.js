@@ -1,4 +1,4 @@
-import { registerBlockType, createBlock } from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import {
   InnerBlocks,
@@ -27,67 +27,24 @@ const attributes = {
   },
 };
 
-registerBlockType('reactwp-blocks/team-members', {
-  title: __('Team Members Grid Layout', 'reactwp-blocks'),
+registerBlockType('reactwp-blocks/posts-grid', {
+  title: __('Posts Grid Layout', 'reactwp-blocks'),
   description: __(
-    'Container block showing team member blocks',
+    'Container block showing cards with latest posts by categories',
     'reactwp-blocks'
   ),
   category: 'reactwp-category',
   icon: 'grid-view',
   keywords: [
-    __('team', 'reactwp-blocks'),
-    __('member', 'reactwp-blocks'),
-    __('person', 'reactwp-blocks'),
+    __('grid', 'reactwp-blocks'),
+    __('posts', 'reactwp-blocks'),
+    __('card', 'reactwp-blocks'),
   ],
 
   supports: {
     html: false,
     align: ['wide', 'full'],
   },
-
-  transforms: {
-    from: [
-      {
-        type: 'block',
-        blocks: ['core/gallery'],
-        transform: ({ columns, images }) => {
-          let inner = images.map(({ alt, id, url }) => {
-            return createBlock('reactwp-blocks/team-member', {
-              alt,
-              id: parseInt(id),
-              url,
-            });
-          });
-          return createBlock(
-            'reactwp-blocks/team-members',
-            {
-              columnsM: columns,
-            },
-            inner
-          );
-        },
-      },
-      {
-        type: 'block',
-        blocks: ['core/image'],
-        isMultiBlock: true,
-        transform: (attributes) => {
-          let inner = attributes.map(({ alt, id, url }) => {
-            return createBlock('reactwp-blocks/team-member', { alt, id, url });
-          });
-          return createBlock(
-            'reactwp-blocks/team-members',
-            {
-              columnsM: 2,
-            },
-            inner
-          );
-        },
-      },
-    ],
-  },
-
   attributes,
 
   // eslint-disable-next-line react/display-name
@@ -106,10 +63,10 @@ registerBlockType('reactwp-blocks/team-members', {
 
     // only these blocks allowed, add default template
     const innerBlocksProps = useInnerBlocksProps(blockProps, {
-      allowedBlocks: ['reactwp-blocks/team-member'],
+      allowedBlocks: ['reactwp-blocks/latest-posts'],
       template: [
-        ['reactwp-blocks/team-member', { title: 'John Doe' }],
-        ['reactwp-blocks/team-member', { title: 'Jane Doe' }],
+        ['reactwp-blocks/latest-posts', { numberOfPosts: 3, postCategory: 1 }],
+        ['reactwp-blocks/latest-posts', { numberOfPosts: 3, postCategory: 1 }],
       ],
     });
 
@@ -151,7 +108,9 @@ registerBlockType('reactwp-blocks/team-members', {
               max={8}></RangeControl>
           </PanelBody>
         </InspectorControls>
-        <div {...innerBlocksProps} />
+        <div>
+          <div {...innerBlocksProps} />
+        </div>
       </div>
     );
     // InnerBlocks = templateLock='insert' | 'all'

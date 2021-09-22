@@ -1,0 +1,14 @@
+.card-img-overlay-height {
+  height: 280px;
+  transition: 0.3s all;
+}
+
+.card-img-darken {
+  height: 280px !important;
+  object-fit: cover;
+  filter: brightness(0.4);
+}
+
+.card-img-overlay-height:hover {
+  background-color: rgba(255,255,255, 0.2);
+}

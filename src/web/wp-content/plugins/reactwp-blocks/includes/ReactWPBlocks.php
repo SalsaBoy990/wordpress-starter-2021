@@ -106,7 +106,7 @@ final class ReactWPBlocks
   function registerCustomBlocks(): void
   {
     // dirname to JS and CSS files (bundled into dist/ folder with Webpack, `npm run build`)
-    $dirPath = dirname(__FILE__, 2);
+    $dirPath = dirname(__FILE__, 1);
 
     // --------------------------------------------
     // Admin script bundle
@@ -166,11 +166,15 @@ final class ReactWPBlocks
           'type' => 'number',
           'default' => 3
         ),
-        'postCategories' => array(
+        'postCategory' => array(
           'type' => 'string',
+          'default' => 1
         )
       )
     ));
+
+    // Grid Container for Dynamic Blogposts List blocks
+    $this->registerCustomBlockTypes('posts-grid');
 
 
     // Dynamic Woocommerce Products block

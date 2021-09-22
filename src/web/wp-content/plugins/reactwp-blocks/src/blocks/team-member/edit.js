@@ -32,6 +32,8 @@ import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 import arrayMove from 'array-move';
 
+import './style.editor.scss';
+
 class TeamMemberEdit extends Component {
   state = {
     selectedLink: null,
@@ -178,23 +180,25 @@ class TeamMemberEdit extends Component {
     const SortableList = SortableContainer(() => {
       return (
         <ul>
-          {social.map((item, index) => {
-            let SortableItem = SortableElement(() => {
-              return (
-                <li
-                  key={index}
-                  onClick={() => {
-                    this.setState({ selectedLink: index });
-                  }}
-                  className={
-                    this.state.selectedLink === index ? 'is-selected' : null
-                  }>
-                  <Dashicon icon={item.icon} size={32}></Dashicon>
-                </li>
-              );
-            });
-            return <SortableItem key={index} index={index}></SortableItem>;
-          })}
+          {isSelected &&
+            social && social.map((item, index) => {
+              let SortableItem = SortableElement(() => {
+                return (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      this.setState({ selectedLink: index });
+                    }}
+                    className={
+                      this.state.selectedLink === index ? 'is-selected' : null
+                    }>
+                    <i className={`fab fa-${item.icon} fa-2x`}></i>
+                    <Dashicon icon={item.icon} size={32}></Dashicon>
+                  </li>
+                );
+              });
+              return <SortableItem key={index} index={index}></SortableItem>;
+            })}
           {isSelected && (
             <li className={'wp-block-reactwp-blocks-team-member__addIconLi'}>
               <Tooltip text={__('Add Social Link', 'reactwp-blocks')}>
@@ -202,7 +206,7 @@ class TeamMemberEdit extends Component {
                   onClick={this.addNewLink}
                   className={'wp-block-reactwp-blocks-team-member__addIconBtn'}>
                   <Dashicon icon={'plus'} size={32}></Dashicon>
-                  Social link
+                  {__('Social link', 'reactwp-blocks')}
                 </button>
               </Tooltip>
             </li>
@@ -265,98 +269,114 @@ class TeamMemberEdit extends Component {
             </Toolbar>
           )}
         </BlockControls>
-        <div className={className}>
-          {url ? (
-            <>
-              <img src={url} alt={alt} />
-              {isBlobURL(url) && <Spinner />}
-            </>
-          ) : (
-            <MediaPlaceholder
-              icon='format-image'
-              onSelect={this.onSelectImage}
-              onSelectURL={this.onSelectURL}
-              onError={this.onUploadError}
-              //accept='image/*'
-              allowedTypes={['image']}
-              notices={noticeUI}></MediaPlaceholder>
-          )}
-          <RichText
-            className={'wp-block-reactwp-blocks-team-member__title'}
-            tagName='h4'
-            value={title}
-            placeholder={__('Member Name', 'reactwp-blocks')}
-            allowedFormats={[]}
-            onChange={this.onChangeTitle}></RichText>
-          <RichText
-            className={'wp-block-reactwp-blocks-team-member__info'}
-            tagName='p'
-            value={info}
-            placeholder={__('Member Info', 'reactwp-blocks')}
-            allowedFormats={[]}
-            onChange={this.onChangeInfo}></RichText>
-
-          <div className={'wp-block-reactwp-blocks-team-member__social'}>
-            <SortableList
-              axis='x'
-              helperClass={'social-dragging'}
-              distance={10}
-              onSortEnd={({ oldIndex, newIndex }) =>
-                this.onSortEnd(oldIndex, newIndex)
-              }></SortableList>
-            {/*<ul>
-              {social.map((item, index) => {
-                return (
-                  <li
-                    key={index}
-                    onClick={() => {
-                      this.setState({ selectedLink: index });
-                    }}
-                    className={
-                      this.state.selectedLink === index ? 'is-selected' : null
-                    }>
-                    <Dashicon icon={item.icon} size={32}></Dashicon>
-                  </li>
-                );
-              })}
-              {isSelected && (
-                <li
-                  className={'wp-block-reactwp-blocks-team-member__addIconLi'}>
-                  <Tooltip text={__('Add Item', 'reactwp-blocks')}>
-                    <button
-                      onClick={this.addNewLink}
-                      className={
-                        'wp-block-reactwp-blocks-team-member__addIconBtn'
-                      }>
-                      <Dashicon icon={'plus'} size={32}></Dashicon>
-                    </button>
-                  </Tooltip>
-                </li>
-              )}
-            </ul>*/}
-          </div>
-          {this.state.selectedLink !== null && (
-            <div className={'wp-block-reactwp-blocks-team-member__linkForm'}>
-              <TextControl
-                label={__('Icon', 'reactwp-blocks')}
-                value={social[this.state.selectedLink].icon}
-                onChange={(icon) =>
-                  this.updateSocialItem('icon', icon)
-                }></TextControl>
-              <URLInput
-                label={__('URL', 'reactwp-blocks')}
-                value={social[this.state.selectedLink].link}
-                onChange={(link) =>
-                  this.updateSocialItem('link', link)
-                }></URLInput>
-              <a
-                onClick={this.removeLink}
-                className={'wp-block-reactwp-blocks-team-member__removeLink'}
-                href='#'>
-                {__('Remove Link', 'reactwp-blocks')}
-              </a>
+        <div className={className + ' col'}>
+          <div className='card h-100'>
+            {url ? (
+              <>
+                <img src={url} alt={alt} className='card-img-top team-member-profile-photo' />
+                {isBlobURL(url) && <Spinner />}
+              </>
+            ) : (
+              <MediaPlaceholder
+                icon='format-image'
+                onSelect={this.onSelectImage}
+                onSelectURL={this.onSelectURL}
+                onError={this.onUploadError}
+                //accept='image/*'
+                allowedTypes={['image']}
+                notices={noticeUI}></MediaPlaceholder>
+            )}
+            <div className='card-body'>
+              <RichText
+                className={'wp-block-reactwp-blocks-team-member__title'}
+                tagName='h3'
+                value={title}
+                placeholder={__('Member Name', 'reactwp-blocks')}
+                allowedFormats={[]}
+                onChange={this.onChangeTitle}></RichText>
+              <RichText
+                className={'wp-block-reactwp-blocks-team-member__info'}
+                tagName='p'
+                value={info}
+                placeholder={__('Member Info', 'reactwp-blocks')}
+                allowedFormats={[]}
+                onChange={this.onChangeInfo}></RichText>
             </div>
-          )}
+
+            <div className='card-footer'>
+              <div className={'wp-block-reactwp-blocks-team-member__social'}>
+                <SortableList
+                  axis='x'
+                  helperClass={'social-dragging'}
+                  distance={10}
+                  onSortEnd={({ oldIndex, newIndex }) =>
+                    this.onSortEnd(oldIndex, newIndex)
+                  }></SortableList>
+                {
+                  <ul>
+                    {social && social.map((item, index) => {
+                      return (
+                        <li
+                          key={index}
+                          onClick={() => {
+                            this.setState({ selectedLink: index });
+                          }}
+                          className={
+                            this.state.selectedLink === index
+                              ? 'is-selected'
+                              : null
+                          }>
+                          <i className={`fab fa-${item.icon} fa-2x`}></i>
+                          <Dashicon icon={item.icon} size={32}></Dashicon>
+                        </li>
+                      );
+                    })}
+                    {isSelected && (
+                      <li
+                        className={
+                          'wp-block-reactwp-blocks-team-member__addIconLi'
+                        }>
+                        <Tooltip text={__('Add Item', 'reactwp-blocks')}>
+                          <button
+                            onClick={this.addNewLink}
+                            className={
+                              'wp-block-reactwp-blocks-team-member__addIconBtn'
+                            }>
+                            <Dashicon icon={'plus'} size={32}></Dashicon>
+                          </button>
+                        </Tooltip>
+                      </li>
+                    )}
+                  </ul>
+                }
+              </div>
+              {this.state.selectedLink !== null && (
+                <div
+                  className={'wp-block-reactwp-blocks-team-member__linkForm'}>
+                  <TextControl
+                    label={__('Icon', 'reactwp-blocks')}
+                    value={social[this.state.selectedLink].icon}
+                    onChange={(icon) =>
+                      this.updateSocialItem('icon', icon)
+                    }></TextControl>
+                  <URLInput
+                    label={__('URL', 'reactwp-blocks')}
+                    value={social[this.state.selectedLink].link}
+                    onChange={(link) =>
+                      this.updateSocialItem('link', link)
+                    }></URLInput>
+                  <a
+                    onClick={this.removeLink}
+                    className={
+                      'wp-block-reactwp-blocks-team-member__removeLink'
+                    }
+                    href='#'>
+                    {__('Remove Link', 'reactwp-blocks')}
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </>
     );

@@ -1,5 +1,4 @@
 import './style.scss';
-import './style.editor.scss';
 
 import edit from './edit';
 import React from 'react';
@@ -7,13 +6,12 @@ import React from 'react';
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { RichText } from '@wordpress/block-editor';
-import { Dashicon } from '@wordpress/components';
 
 const attributes = {
   title: {
     type: 'string',
     source: 'html',
-    selector: 'h4',
+    selector: 'h3',
   },
   info: {
     type: 'string',
@@ -39,9 +37,10 @@ const attributes = {
   social: {
     type: 'array',
     default: [
-      /*  { link: 'https://facebook.com', icon: 'wordpress' },
-      { link: 'https://twitter.com', icon: 'wordpress' },
-      { link: 'https://youtube.com', icon: 'wordpress' },*/
+      { link: 'https://facebook.com/', icon: 'facebook' },
+      { link: 'https://twitter.com/', icon: 'twitter' },
+      { link: 'https://m.me.com/', icon: 'facebook-messenger' },
+      { link: 'https://linkedin.com/', icon: 'linkedin' },
     ],
     source: 'query',
     selector: '.wp-block-reactwp-blocks-team-member__social ul li',
@@ -88,42 +87,56 @@ registerBlockType('reactwp-blocks/team-member', {
   save: ({ attributes }) => {
     const { title, info, url, alt, id, social } = attributes;
     return (
-      <div>
-        {url && (
-          <img src={url} alt={alt} className={id ? `wp-image-${id}` : null} />
-        )}
-        {title && (
-          <RichText.Content
-            className={'wp-block-reactwp-blocks-team-member__title'}
-            tagName='h4'
-            value={title}
-          />
-        )}
-        {info && (
-          <RichText.Content
-            className={'wp-block-reactwp-blocks-team-member__info'}
-            tagName='p'
-            value={info}
-          />
-        )}
-        {social.length > 0 && (
-          <div className={'wp-block-reactwp-blocks-team-member__social'}>
-            <ul>
-              {social.map((item, index) => {
-                return (
-                  <li key={index} data-icon={item.icon}>
-                    <a
-                      href={item.link}
-                      target='_blank'
-                      rel='noreferrer noopener'>
-                      <Dashicon icon={item.icon} size={32}></Dashicon>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+      <div className='col'>
+        <div className='card h-100'>
+          {url && (
+            <img
+              src={url}
+              alt={alt}
+              className={
+                id
+                  ? `wp-image-${id} card-img-top team-member-profile-photo`
+                  : null
+              }
+            />
+          )}
+          <div className='card-body'>
+            {title && (
+              <RichText.Content
+                className={'wp-block-reactwp-blocks-team-member__title'}
+                tagName='h3'
+                value={title}
+              />
+            )}
+            {info && (
+              <RichText.Content
+                className={'wp-block-reactwp-blocks-team-member__info'}
+                tagName='p'
+                value={info}
+              />
+            )}
           </div>
-        )}
+          <div className='card-footer'>
+            {social.length > 0 && (
+              <div className={'wp-block-reactwp-blocks-team-member__social'}>
+                <ul>
+                  {social.map((item, index) => {
+                    return (
+                      <li key={index} data-icon={item.icon}>
+                        <a
+                          href={item.link}
+                          target='_blank'
+                          rel='noreferrer noopener'>
+                          <i className={`fab fa-${item.icon} fa-2x`}></i>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   },

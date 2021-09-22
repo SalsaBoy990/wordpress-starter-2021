@@ -122,8 +122,6 @@ class LatestProductsEdit extends Component {
       queryArgs['category'] = categoryId;
     }
 
-    console.log(queryArgs);
-
     const path = '/wc/v3/products';
 
     return apiFetch({
