@@ -29,6 +29,9 @@ services: # configuring each container
     depends_on: # container dependencies that need to be running first
       - db
     image: wordpress:latest # image used by our container
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:80" # setting our port bindings for networking
     restart: unless-stopped
@@ -51,6 +54,16 @@ services: # configuring each container
       PMA_HOST: db:3306
     ports:
       - 1337:80
+
+  vuejs:
+    container_name: ${DOCKERAPP_NAME}-vuejs
+    build:
+      context: ./src/web/wp-content/plugins/vuecommerce
+      dockerfile: Dockerfile
+    volumes:
+      - './src/web/wp-content/plugins/vuecommerce:/usr/src/app'
+    ports:
+      - '8080:8080'
 # we need to make db changes persistent with a volume
 volumes:
     db_data: {}
