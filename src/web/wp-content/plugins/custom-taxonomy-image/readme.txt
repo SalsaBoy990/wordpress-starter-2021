@@ -1,11 +1,10 @@
 === Category and Taxonomy Image ===
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=amu02.aftab@gmail.com&item_name=Donation+category+and+Custom+taxonomy+image
 Tags: Category Image, Category Images, Categories Images, taxonomy image, taxonomy images, taxonomies images, category icon, categories icons, category logo, categories logos, admin, wp-admin, category image plugin, categories images plugin, category featured image, categories featured images, feature image for category, term image, tag image term images, tag images
-Contributors: amu02aftab
-Author: amu02aftab
-Tested up to: 5.6
+Contributors: András Gulácsi
+Author: András Gulácsi
+Tested up to: 5.8.1
 License: GPLv2
-Requires at least: 3.5.0
+Requires at least: 5.7
 Stable tag: 1.0
 
 == Description ==
