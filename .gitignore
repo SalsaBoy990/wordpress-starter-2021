@@ -2,6 +2,10 @@
 .idea
 *.iml
 
+# VS Code 
+.history
+.vscode
+
 # Éles .env ne kerüljön fel!
 #.env
 .env.prod
@@ -34,6 +38,8 @@ src/web/wp-content/themes/*
 src/web/wp-content/plugins/*
 !src/web/wp-content/plugins/bs5*
 !src/web/wp-content/plugins/reactwp-blocks
+!src/web/wp-content/plugins/vuecommerce
+!src/web/wp-content/plugins/custom-taxonomy-image
 
 # csak a mappák legyenek meg, tartalom nélkül
 src/web/wp-content/backups-dup-lite/*
@@ -42,6 +48,7 @@ src/web/wp-content/languages/*
 src/web/wp-content/upgrade/*
 
 src/web/wp-content/uploads/wc-logs/
+src/web/wp-content/uploads/2021/09/wp_dummy_content_generator*
 
 # ez a wordfence log-okat tartalmazza
 src/web/wp-content/wflogs/*
