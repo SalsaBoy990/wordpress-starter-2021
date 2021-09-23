@@ -82,10 +82,14 @@ final class VueCommerceBlocks
   public function addVueScripts()
   {
     if (is_page_template('page-vue.php')) {
-      wp_enqueue_script('vuecommerce-js-chunk-vendors', 'http://localhost:8080/js/chunk-vendors.js', [], false, true);
+      wp_enqueue_script('vuecommerce-js-chunk-vendors', plugins_url() . '/vuecommerce/dist/js/chunk-vendors.1f124022.js', [], false, true);
 
       // register the Vue build script
-      wp_register_script('vuecommerce-js-app', 'http://localhost:8080/js/app.js', [], false, true);
+      wp_register_script('vuecommerce-js-app', plugins_url() . '/vuecommerce//dist/js/app.8d457bfb.js', [], false, true);
+
+      // style.css
+    wp_enqueue_style('vuecommerce-css-app', plugins_url() . '/vuecommerce//dist/css/app.117d1791.css');
+    wp_enqueue_style('vuecommerce-css-chunk-vendors', plugins_url() . '/vuecommerce//dist/css/chunk-vendors.71a233fb.css');
 
       // make custom data available to the Vue app with wp_localize_script.
       global $post;
