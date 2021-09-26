@@ -77,8 +77,6 @@ export default {
       wpCategoryImages: wpData.post_category_images,
     };
   },
-  mounted() {},
-  methods: {},
 };
 </script>
 

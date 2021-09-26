@@ -1,7 +1,7 @@
 <template>
   <div v-if="isDataAvailable">
     <!-- Show post / result count -->
-    <PostCounter
+    <Counter
       :filteredResultsLength="filteredResults.length"
       :wpPostsLength="wpPosts.length"
     />
@@ -22,15 +22,15 @@
   </div>
 
   <!-- Display message and spinner when requesting data -->
-  <LoadingResults v-else :apiResponse="apiResponse" />
+  <LoadIndicator v-else :apiResponse="apiResponse" />
   <!-- End Display message and spinner when requesting data -->
 </template>
 
 <script>
 import axios from "axios";
-import DisplayPost from "./DisplayPost.vue";
-import PostCounter from "./PostCounter.vue";
-import LoadingResults from "./LoadingResults.vue";
+import DisplayPost from "../../components/posts/DisplayPost.vue";
+import Counter from "../../components/shared/Counter.vue";
+import LoadIndicator from "../../components/shared/LoadIndicator.vue";
 
 export default {
   data() {
@@ -92,8 +92,8 @@ export default {
 
   components: {
     DisplayPost,
-    PostCounter,
-    LoadingResults,
+    Counter,
+    LoadIndicator,
   },
 
   mounted() {

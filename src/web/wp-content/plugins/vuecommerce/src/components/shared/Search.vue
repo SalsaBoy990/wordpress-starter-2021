@@ -5,14 +5,14 @@
         v-model.lazy="searchTerm"
         type="text"
         class="form-control"
-        :placeholder="$t('searchPage.placeholder')"
-        :aria-label="$t('searchPage.placeholder')"
+        :placeholder="$t('shared.placeholder')"
+        :aria-label="$t('shared.placeholder')"
         aria-describedby="button-search"
       />
       <button class="btn btn-secondary" type="button" id="button-search">
         <font-awesome-icon :icon="['fas', 'search']" :size="'lg'">
         </font-awesome-icon>
-        {{ $t("searchPage.search") }}
+        {{ $t("shared.search") }}
       </button>
     </div>
 

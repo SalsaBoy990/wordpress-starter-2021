@@ -49,7 +49,7 @@ final class VueCommerceBlocks
     add_shortcode('vuecommerce_filter_products', array($this, 'vuecommerceFilterProducts'));
 
     // Extend REST API for additional post meta
-    add_action( 'rest_api_init', array($this,'extendPostsApiResponse') );
+    add_action('rest_api_init', array($this, 'extendPostsApiResponse'));
   }
 
 
@@ -82,28 +82,30 @@ final class VueCommerceBlocks
   public function addVueScripts()
   {
     if (is_page_template('page-vue.php')) {
-      wp_enqueue_script('vuecommerce-js-chunk-vendors', plugins_url() . '/vuecommerce/dist/js/chunk-vendors.1f124022.js', [], false, true);
+      wp_enqueue_script('vuecommerce-js-chunk-vendors', plugins_url() . '/vuecommerce/dist/js/chunk-vendors.872171a8.js', [], false, true);
+      // wp_enqueue_script('vuecommerce-js-chunk-vendors', 'http://localhost:8080/js/chunk-vendors.js', [], false, true);
 
       // register the Vue build script
-      wp_register_script('vuecommerce-js-app', plugins_url() . '/vuecommerce//dist/js/app.8d457bfb.js', [], false, true);
+      wp_register_script('vuecommerce-js-app', plugins_url() . '/vuecommerce//dist/js/app.55ab8ed7.js', [], false, true);
+      // wp_register_script('vuecommerce-js-app', 'http://localhost:8080/js/app.js', [], false, true);
 
       // style.css
-    wp_enqueue_style('vuecommerce-css-app', plugins_url() . '/vuecommerce//dist/css/app.117d1791.css');
-    wp_enqueue_style('vuecommerce-css-chunk-vendors', plugins_url() . '/vuecommerce//dist/css/chunk-vendors.71a233fb.css');
+      wp_enqueue_style('vuecommerce-css-app', plugins_url() . '/vuecommerce/dist/css/app.9728d9e9.css');
+      wp_enqueue_style('vuecommerce-css-chunk-vendors', plugins_url() . '/vuecommerce/dist/css/chunk-vendors.71a233fb.css');
 
       // make custom data available to the Vue app with wp_localize_script.
       global $post;
 
       $postCategories = get_terms(array(
-            'taxonomy' => 'category', // default post categories.
-            'hide_empty' => true,
-            'fields' => 'all',
+        'taxonomy' => 'category', // default post categories.
+        'hide_empty' => true,
+        'fields' => 'all',
       ));
 
       // get category image from options
       $postCategoryImages = [];
       $categoryImageOptionNamePrefix = '_category_image-';
-      foreach($postCategories as $category) {
+      foreach ($postCategories as $category) {
         $image = get_option($categoryImageOptionNamePrefix . $category->term_id);
         // only if there is an image attached to the category
         if ($image) {
@@ -113,7 +115,16 @@ final class VueCommerceBlocks
         }
       }
 
+      // get product categories
+      $productCategories = get_terms(array(
+        'taxonomy' => 'product_cat',
+        'orderby'    => 'name',
+        'order'      => 'asc',
+        'hide_empty' => true,
+        'fields'     => 'all'
+      ));
 
+ 
       wp_localize_script(
         'vuecommerce-js-app', // vue script handle defined in wp_register_script.
         'wpData', // js object that will made availabe to Vue.
@@ -122,7 +133,8 @@ final class VueCommerceBlocks
           'rest_url' => untrailingslashit(esc_url_raw(rest_url())), // URL to the REST endpoint.
           'app_path' => $post->post_name, // page where the custom page template is loaded.
           'post_categories' => $postCategories,
-          'post_category_images' => $postCategoryImages
+          'post_category_images' => $postCategoryImages,
+          'product_categories' => $productCategories
         )
       );
 
