@@ -191,8 +191,7 @@ export default {
         /* Note: the per_page argument is capped at 100 records by the REST API.
          * https://developer.wordpress.org/rest-api/using-the-rest-api/pagination/
          */
-        const restURL = this.wpData.rest_url;
-        //const restURL = "https://decimus.hu/wp-json";
+        const restURL = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_REST_API_PATH : this.wpData.rest_url;
         const productsPerPage = 100; // default is 10.
         const status = "publish"; // retrieve data for published products
 

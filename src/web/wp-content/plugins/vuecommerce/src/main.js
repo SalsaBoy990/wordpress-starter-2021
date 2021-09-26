@@ -2,7 +2,7 @@ import Vue from "vue";
 import router from "./app-routes";
 import VueI18n from "vue-i18n";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTimes, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faSearch, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import App from "./App.vue";
@@ -10,7 +10,7 @@ import App from "./App.vue";
 require("animate.css");
 
 
-library.add(faTimes, faSearch);
+library.add(faTimes, faSearch, faChevronDown, faChevronUp);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;

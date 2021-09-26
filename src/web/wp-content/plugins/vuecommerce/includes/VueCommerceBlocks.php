@@ -82,16 +82,19 @@ final class VueCommerceBlocks
   public function addVueScripts()
   {
     if (is_page_template('page-vue.php')) {
-      wp_enqueue_script('vuecommerce-js-chunk-vendors', plugins_url() . '/vuecommerce/dist/js/chunk-vendors.872171a8.js', [], false, true);
-      // wp_enqueue_script('vuecommerce-js-chunk-vendors', 'http://localhost:8080/js/chunk-vendors.js', [], false, true);
-
+      
       // register the Vue build script
-      wp_register_script('vuecommerce-js-app', plugins_url() . '/vuecommerce//dist/js/app.55ab8ed7.js', [], false, true);
-      // wp_register_script('vuecommerce-js-app', 'http://localhost:8080/js/app.js', [], false, true);
+      if (get_site_url() === 'http://localhost:8000' || get_site_url() === 'https://localhost:8000') {
+        wp_enqueue_script('vuecommerce-js-chunk-vendors', 'http://localhost:8080/js/chunk-vendors.js', [], false, true);
+        wp_register_script('vuecommerce-js-app', 'http://localhost:8080/js/app.js', [], false, true);
+      } else {
+        wp_enqueue_script('vuecommerce-js-chunk-vendors', plugins_url() . '/vuecommerce/dist/js/chunk-vendors.1fa3d7ca.js', [], false, true);
+        wp_register_script('vuecommerce-js-app', plugins_url() . '/vuecommerce//dist/js/app.b507f4d4.js', [], false, true);
+      }
 
       // style.css
-      wp_enqueue_style('vuecommerce-css-app', plugins_url() . '/vuecommerce/dist/css/app.9728d9e9.css');
       wp_enqueue_style('vuecommerce-css-chunk-vendors', plugins_url() . '/vuecommerce/dist/css/chunk-vendors.71a233fb.css');
+      wp_enqueue_style('vuecommerce-css-app', plugins_url() . '/vuecommerce/dist/css/app.08f1f743.css');
 
       // make custom data available to the Vue app with wp_localize_script.
       global $post;

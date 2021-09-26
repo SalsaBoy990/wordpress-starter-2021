@@ -112,8 +112,7 @@ export default {
       namespace = "public-woo/v1"
     ) {
       try {
-        const restURL = this.wpData.rest_url;
-        // const restURL = "https://decimus.hu/wp-json";
+        const restURL = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_REST_API_PATH : this.wpData.rest_url;
         const productsPerPage = 100;
 
         // send an initial request and await the response to get the total number of posts.
