@@ -39,7 +39,7 @@ RewriteRule . index.php [L]
 # END WordPress
 
 # RewriteEngine on
-# RewriteCond %{HTTP_REFERER} !^$
-# RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?saida.hu [NC]
-# RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?google.com [NC]
-# RewriteRule \.(jpg|jpeg|png|gif)$ – [NC,F,L] 
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?decimus.hu [NC]
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?google.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif)$ – [NC,F,L] 
