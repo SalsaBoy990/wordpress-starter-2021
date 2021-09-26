@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import AppNavigation from './components/AppNavigation';
+import AppNavigation from './components/global/AppNavigation';
 export default {
 	components: {
 		AppNavigation

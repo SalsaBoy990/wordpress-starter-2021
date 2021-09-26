@@ -2,7 +2,7 @@ import Vue from "vue";
 import router from "./app-routes";
 import VueI18n from "vue-i18n";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faTimes, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faSearch, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import App from "./App.vue";
@@ -10,7 +10,7 @@ import App from "./App.vue";
 require("animate.css");
 
 
-library.add(faTimes, faSearch);
+library.add(faTimes, faSearch, faChevronDown, faChevronUp);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;
@@ -24,45 +24,71 @@ const messages = {
       search: "Search",
       categories: "Categories",
     },
-    post: {
-      readMore: "Read more",
-    },
-    searchPage: {
+    shared: {
+      loading: "Loading... ",
+      error: "The request could not be processed!",
       search: "Search",
+      placeholder: "Search in titles and excerpts for...",
+      posts: "Items",
+      foundOf: "Found {numberOfResults} of {numberOfAllPosts}",
+    },
+    postsPage: {
       filterByCategories: "Filter by Categories",
       sortByDateOrder: "Sort by Date",
-      placeholder: "Search in titles and excerpts for...",
+      newestFirst: "Newest first",
+      oldestFirst: "Oldest first",
+      discounted: "On sale",
+      readMore: "Read more",
     },
     categoriesPage: {
       allPosts: "All Posts",
       postsInCategory: "posts in category",
     },
-    getPosts: {
-      posts: "Posts",
-      foundOf: "Found {numberOfResults} of {numberOfAllPosts}",
+    productsPage: {
+      filterByCategory: "Filter by Category",
+      filterByPrice: "Filter by Price",
+      filterByOnSale: "Only On Sale Products",
+      sortByProps: "Sort products",
+      maxPrice: "Max price:",
+      minPrice: "Min price:",
+      error: "The minimum price should be less than the maximum price.",
     },
   },
   hu: {
     navigation: {
-      search: "Keresés",
-      categories: "Kategóriák",
+      searchPosts: "Bejegyzéskeresés",
+      searchProducts: "Termékkeresés",
+      productCategories: "Termékkategóriák",
+      postCategories: "Bejegyzés-kategóriák",
     },
-    post: {
-      readMore: "Tovább olvasom",
-    },
-    searchPage: {
+    shared: {
+      loading: "Betöltés... ",
+      error: "A kérést nem lehetett feldolgozni!",
       search: "Keresés",
+      placeholder: "Keresés a címekben és a leírásban...",
+      posts: "elem",
+      foundOf: "{numberOfResults} találat {numberOfAllPosts} elemből",
+    },
+    postsPage: {
       filterByCategories: "Szűrés kategórák szerint",
       sortByDateOrder: "Rendezés dátum szerint",
-      placeholder: "Keresés a címekben és a kivonatokban...",
+      newestFirst: "Legújabb elől",
+      oldestFirst: "legrégebbi elől",
+      readMore: "Tovább olvasom",
     },
     categoriesPage: {
       allPosts: "Összes bejegyzés",
       postsInCategory: "bejegyzés a kategóriában",
     },
-    getPosts: {
-      posts: "bejegyzés",
-      foundOf: "{numberOfResults} találat {numberOfAllPosts} bejegyzésből",
+    productsPage: {
+      filterByCategory: "Kategória szerint szűrés",
+      filterByPrice: "Ár szerint szűrés",
+      filterByOnSale: "Csak a leértékelt termékek",
+      sortByProps: "Sorba rendezés",
+      discounted: "Leértékeltek",
+      maxPrice: "Legdrágább:",
+      minPrice: "Legolcsóbb:",
+      error: "A minimum árnak kisebbnek kell lennie a maximum árnál.",
     },
   },
 };

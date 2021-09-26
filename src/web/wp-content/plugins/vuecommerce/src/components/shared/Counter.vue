@@ -1,10 +1,10 @@
 <template>
   <div>
     <small class="text-muted" v-if="filteredResultsLength === wpPostsLength"
-      >{{ wpPostsLength }} {{ $t("getPosts.posts") }}</small
+      >{{ wpPostsLength }} {{ $t("shared.posts") }}</small
     >
     <small class="text-muted" v-else>{{
-      $t("getPosts.foundOf", {
+      $t("shared.foundOf", {
         numberOfResults: filteredResultsLength,
         numberOfAllPosts: wpPostsLength,
       })

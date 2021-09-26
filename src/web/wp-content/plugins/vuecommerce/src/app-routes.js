@@ -2,6 +2,8 @@ import Vue from "vue";
 import Router from "vue-router";
 import SearchPostsPage from "./pages/SearchPostsPage";
 import PostCategoriesPage from "./pages/PostCategoriesPage";
+import SearchProductsPage from "./pages/SearchProductsPage";
+import ProductCategoriesPage from "./pages/ProductCategoriesPage";
 
 /*global wpData:true*/
 /*eslint no-undef: "error"*/
@@ -18,14 +20,24 @@ export default new Router({
   mode: "hash", // or "history"
   routes: [
     {
-      path: "/search",
+      path: "/search-posts",
       name: "SearchPostsPage",
       component: SearchPostsPage,
     },
     {
-      path: "/categories",
+      path: "/post-categories",
       name: "PostCategoriesPage",
       component: PostCategoriesPage,
+    },
+    {
+      path: "/search-products",
+      name: "SearchProductsPage",
+      component: SearchProductsPage,
+    },
+    {
+      path: "/product-categories",
+      name: "ProductCategoriesPage",
+      component: ProductCategoriesPage,
     },
     {
       path: "*",

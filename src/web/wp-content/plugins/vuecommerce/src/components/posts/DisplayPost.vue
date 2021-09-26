@@ -15,7 +15,7 @@
 
         <p class="card-text" v-html="post.excerpt.rendered" />
         <a :href="post.link" class="btn btn-primary">{{
-          $t("post.readMore")
+          $t("postsPage.readMore")
         }}</a>
       </div>
       <span
