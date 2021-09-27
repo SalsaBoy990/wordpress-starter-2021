@@ -2,8 +2,8 @@
   <div v-if="isDataAvailable">
     <!-- Show post / result count -->
     <Counter
-      :filteredResultsLength="filteredResults.length"
-      :wpPostsLength="wpPosts.length"
+      :filteredResultsLength="filteredNumberOfPosts"
+      :wpPostsLength="totalNumberOfPosts"
     />
     <!-- End Show post / result count -->
 
@@ -12,7 +12,7 @@
       class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-4 my-4"
     >
       <DisplayPost
-        v-for="post in filteredResults"
+        v-for="post in wpPosts"
         :key="post.id"
         :post="post"
         role="article"
@@ -37,34 +37,13 @@ export default {
     return {
       apiResponse: "", // initial loading or error messages.
       wpPosts: [], // REST API response data goes here.
+      filteredNumberOfPosts: null,
+      totalNumberOfPosts: null,
       /* eslint-disable no-undef */
       wpData, // global data made available via wp_localize_script.
       isDataAvailable: false,
+      maxPageNumber: null,
     };
-  },
-
-  computed: {
-    // computed property to get filtered data based on the search key.
-    filteredResults() {
-      const pattern = new RegExp(this.searchTerm, "i"); // match keyword against post titles or excerpts.
-      const filteredPosts = this.wpPosts.filter((post) => {
-        return (
-          post.title.rendered.match(pattern) ||
-          post.vue_meta.custom_excerpt.match(pattern)
-        );
-      });
-
-      // further filter the results based on the category filters.
-      if (this.appFilters && this.appFilters.length) {
-        return filteredPosts.filter((post) =>
-          post.vue_meta.term_ids.some((terms) =>
-            this.appFilters.includes(terms)
-          )
-        );
-      } else {
-        return filteredPosts;
-      }
-    },
   },
 
   props: {
@@ -88,6 +67,10 @@ export default {
       type: String,
       default: "desc",
     },
+    pageNumber: {
+      type: Number,
+      default: 1,
+    },
   },
 
   components: {
@@ -105,6 +88,13 @@ export default {
     // watch the prop fetchNow which changes when submit is clicked, and call the method this.fetchData()
     fetchNow: "fetchData",
     order: "fetchData",
+    pageNumber: "fetchData",
+    searchTerm: "fetchData",
+    appFilters: "fetchData",
+
+    maxPageNumber() {
+      this.$emit("onMaxPageChange", parseInt(this.maxPageNumber, 10));
+    },
   },
 
   methods: {
@@ -112,64 +102,72 @@ export default {
     fetchData() {
       if (0 < this.fetchNow) {
         this.isDataAvailable = false;
-        this.getPosts(this.route, "wp/v2", this.order);
+        this.getPosts(this.route, "wp/v2", this.order, this.pageNumber);
         this.apiResponse = " Loading... ";
       }
     },
 
     /* eslint-disable */
-    async getPosts(route = "posts", namespace = "wp/v2", order = "desc") {
+    async getPosts(
+      route = "posts",
+      namespace = "wp/v2",
+      order = "desc",
+      pageNumber = 1
+    ) {
       try {
         /* Note: the per_page argument is capped at 100 records by the REST API.
          * https://developer.wordpress.org/rest-api/using-the-rest-api/pagination/
          */
-        const restURL = process.env.NODE_ENV === 'development' ? process.env.VUE_APP_REST_API_PATH : this.wpData.rest_url;
-        const postsPerPage = 100; // default is 10.
+        const restURL =
+          process.env.NODE_ENV === "development"
+            ? process.env.VUE_APP_REST_API_PATH
+            : this.wpData.rest_url;
+        const postsPerPage = process.env.VUE_APP_POSTS_PER_PAGE;
         const fields = "id,title,date_gmt,link,excerpt,vue_meta"; // retrieve data for specific fields only.
 
-        // send an initial request and await the response to get the total number of posts.
-        const response = await axios(
-          `${restURL}/${namespace}/${route}?per_page=${postsPerPage}&page=1&_fields=${fields}&order=${order}`
-        );
-        // since partial data is already available from this response, make it available.
+        // prepare the format to query posts by cat ids
+        let categoryIdsSeparatedByComma = "";
+        if (this.appFilters.length > 0) {
+          this.appFilters.forEach((id, index) => {
+            categoryIdsSeparatedByComma +=
+              index < this.appFilters.length - 1 ? id + "," : id;
+          });
+        }
+
+        // construct query
+        let query = restURL + "/" + namespace + "/" + route + "?per_page=" + postsPerPage + "&page=" + pageNumber + "&_fields=" + fields + "&order=" + order;
+
+        if (categoryIdsSeparatedByComma !== '') {
+          query += ("&categories=" + categoryIdsSeparatedByComma);
+        }
+        if(this.searchTerm !== '') {
+          query += ("&search=" + this.searchTerm)
+        }
+
+        // send request and await the response to get the posts.
+        const response = await axios(query);
+
+        // save data, make it available.
         this.wpPosts = response.data;
         this.isDataAvailable = true;
-        /*
-         * calculate total number of required API requests using the header fields from the response.
-         * headers['x-wp-total']: Total WordPress Posts
-         * headers['x-wp-totalpages'] Total number of pages based on the per_page param.
-         */
-        const wpTotalPages = Math.ceil(
-          response.headers["x-wp-total"] / postsPerPage
+
+        // save the filtered number of posts
+        this.filteredNumberOfPosts = parseInt(
+          response.headers["x-wp-total"],
+          10
         );
-        // check & get additional posts but restrict to 1000 posts when per_page is 100. Modify this per your needs.
-        const promises = [];
-        for (let page = 2; page <= wpTotalPages && 10 >= page; page++) {
-          promises.push(
-            // save the promise returned by the axios requests.
-            axios(
-              `${restURL}/${namespace}/${route}?per_page=${postsPerPage}&page=${page}&_fields=${fields}`
-            )
+
+        // for the initial query, save the total number of all posts ever!
+        if (!this.totalNumberOfPosts) {
+          this.totalNumberOfPosts = parseInt(
+            response.headers["x-wp-total"],
+            10
           );
         }
-        // Await all promises to return before rendering the data.
-        const wpData = await Promise.all(promises);
-        wpData.map((post) => this.wpPosts.push(...post.data)); // post.data returns an array.
-        // using the ES6 Spread operator ...post.data to push items of the post.data array instead of the array itself.
 
-        /* OR
-         * render data as soon as it becomes available.
-         */
-        // promises.map( posts => {
-        // 	posts.then( post => {
-        // 		this.wpPosts.push( ...post.data );
-        // 		if ( ! this.isDataAvailable ) {
-        // 			this.isDataAvailable = true;
-        // 		}
-        // 	});
-        // });
+        // how many pages needed for pagination
+        this.maxPageNumber = parseInt(response.headers["x-wp-totalpages"], 10);
 
-        // all posts are retrieved at this point.
       } catch (error) {
         this.apiResponse = ` The request could not be processed! <br> <strong>${error}</strong> `;
       }

@@ -68,7 +68,17 @@
           :searchTerm="searchTerm"
           :appFilters="categoryIdsFilter"
           :order="order"
+          :pageNumber="pageNumber"
+          @onMaxPageChange="maxPageNumber = parseInt($event, 10)"
         />
+
+        <Pagination
+          :pageNumber="pageNumber"
+          :maxPageNumber="maxPageNumber"
+          @onChangePageNumber="pageNumber = $event"
+          :paginationName="'Search results pages of blogposts'"
+        />
+
         <!-- End Get Post List -->
       </div>
     </div>
@@ -80,6 +90,7 @@ import GetPosts from "../services/posts/GetPosts.vue";
 import FilterCategorySwitches from "../components/shared/FilterCategorySwitches.vue";
 import Order from "../components/posts/Order.vue";
 import Search from "../components/shared/Search.vue";
+import Pagination from "../components/shared/Pagination.vue";
 
 export default {
   name: "SearchPostsPage",
@@ -88,6 +99,7 @@ export default {
     FilterCategorySwitches,
     Order,
     Search,
+    Pagination,
   },
   data() {
     return {
@@ -100,6 +112,11 @@ export default {
       screenWidth: null,
       // dropdown switch on/off
       dropdown: "closed",
+      // for pagination
+      pageNumber: 1,
+      // max number of pages
+      maxPageNumber: null,
+      n: 1,
     };
   },
 

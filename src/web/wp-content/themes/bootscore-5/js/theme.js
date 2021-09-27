@@ -63,19 +63,41 @@ jQuery(document).ready(function ($) {
 
     // Smooth Scroll. Will be removed when Safari supports scroll-behaviour: smooth (Bootstrap 5).
     $(function () {
-        $('a[href*="#"]:not([href="#"]):not(a.comment-reply-link):not([href="#tab-reviews"]):not([href="#tab-additional_information"]):not([href="#tab-description"]):not([href="#reviews"]):not([href="#carouselExampleIndicators"]):not([data-smoothscroll="false"])').click(function () {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html, body').animate({
-                        // Change your offset according to your navbar height
-                        scrollTop: target.offset().top - 55
-                    }, 1000);
-                    return !1
-                }
+        $(
+          'a[href*="#"]:not([href="#"]):not(a.comment-reply-link):not([href="#tab-reviews"]):not([href="#tab-additional_information"]):not([href="#tab-description"]):not([href="#reviews"]):not([href="#carouselExampleIndicators"]):not([data-smoothscroll="false"])'
+        ).click(function () {
+          if (
+            location.pathname.replace(/^\//, "") ==
+              this.pathname.replace(/^\//, "") &&
+            location.hostname == this.hostname
+          ) {
+            // do not try to add scroll to Vue SPA paths which have # in them
+            // exeptions
+            if (
+              window.location.hash &&
+              (window.location.hash !== "#/search-posts" ||
+              window.location.hash !== "#/search-products" ||
+              window.location.hash !== "#/post-categories" ||
+              window.location.hash !== "#/product-categories")
+            ) {
+              return;
             }
-        })
+            var target = $(this.hash);
+            target = target.length
+              ? target
+              : $("[name=" + this.hash.slice(1) + "]");
+            if (target.length) {
+              $("html, body").animate(
+                {
+                  // Change your offset according to your navbar height
+                  scrollTop: target.offset().top - 55,
+                },
+                1000
+              );
+              return !1;
+            }
+          }
+        });
     });
 
 
@@ -85,19 +107,34 @@ jQuery(document).ready(function ($) {
         scroll(0, 0)
     }, 1);
     $(function () {
-        $('.scroll').on('click', function (e) {
-            e.preventDefault();
-            $('html, body').animate({
-                // Change your offset according to your navbar height
-                scrollTop: $($(this).attr('href')).offset().top - 55
-            }, 1000, 'swing')
-        });
-        if (window.location.hash) {
-            $('html, body').animate({
-                // Change your offset according to your navbar height
-                scrollTop: $(window.location.hash).offset().top - 55
-            }, 1000, 'swing')
-        }
+      $(".scroll").on("click", function (e) {
+        e.preventDefault();
+        $("html, body").animate(
+          {
+            // Change your offset according to your navbar height
+            scrollTop: $($(this).attr("href")).offset().top - 55,
+          },
+          1000,
+          "swing"
+        );
+      });
+
+      // do not try to add scroll to Vue SPA paths which have # in them
+      if (window.location.hash &&
+        (window.location.hash !== "#/search-posts" ||
+        window.location.hash !== "#/search-products" ||
+        window.location.hash !== "#/post-categories" ||
+        window.location.hash !== "#/product-categories")
+      ) {
+        $("html, body").animate(
+          {
+            // Change your offset according to your navbar height
+            scrollTop: $(window.location.hash).offset().top - 55,
+          },
+          1000,
+          "swing"
+        );
+      }
     });
 
 
